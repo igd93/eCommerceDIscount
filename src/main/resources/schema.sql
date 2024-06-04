@@ -41,7 +41,7 @@ CREATE TABLE BreadDiscount (
     Id BIGINT AUTO_INCREMENT PRIMARY KEY,
     MinDaysOld INT NOT NULL,
     MaxDaysOld INT NOT NULL,
-    DiscountPercentage NUMERIC(8,2) NOT NULL
+    QuantityMultiplier INT NOT NULL
 );
 
 CREATE TABLE VegetablesDiscount (
