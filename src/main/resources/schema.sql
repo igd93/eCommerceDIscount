@@ -33,7 +33,7 @@ CREATE TABLE QuantityDiscount (
     Id BIGINT AUTO_INCREMENT PRIMARY KEY,
     InventoryId BIGINT NOT NULL,
     Quantity INT NOT NULL,
-    DiscountAmount NUMERIC(8, 2) NOT NULL,
+    DiscountAmount INT NOT NULL,
     FOREIGN KEY (InventoryId) REFERENCES Inventory(Id)
 );
 
