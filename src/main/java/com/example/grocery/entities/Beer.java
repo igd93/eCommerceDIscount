@@ -4,11 +4,11 @@ import java.math.BigDecimal;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@NoArgsConstructor
+@Table(name = "Beer")
+
 public class Beer {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)

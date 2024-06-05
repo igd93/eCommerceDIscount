@@ -4,11 +4,10 @@ import java.math.BigDecimal;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@NoArgsConstructor
+@Table(name="VegetableDiscount")
 public class VegetableDiscount {
 
     @Id

@@ -4,11 +4,10 @@ import java.math.BigDecimal;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@NoArgsConstructor
+@Table(name="Vegetable")
 public class Vegetable {
 
     @Id
@@ -25,7 +24,7 @@ public class Vegetable {
     private Integer age;
 
     @OneToOne
-    @JoinColumn(name="invnetoryId", unique = true, nullable=false)
+    @JoinColumn(name="inventoryId", unique = true, nullable=false)
     private Inventory inventory;
 
     

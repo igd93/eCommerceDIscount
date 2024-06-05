@@ -2,11 +2,10 @@ package com.example.grocery.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@NoArgsConstructor
+@Table(name="BreadDiscount")
 public class BreadDiscount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

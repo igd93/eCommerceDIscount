@@ -11,7 +11,7 @@ public interface CartItemService {
 
     CartItem addCartItem(Long inventoryId, int quantity);
 
-    CartItem updateCartItem(Long cartItemId, int quantity);
+    CartItem updateCartItem(Long id, int quantity);
 
     void applyBeerDiscount(CartItem cartItem, Beer beer);
 

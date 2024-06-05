@@ -4,11 +4,11 @@ import java.math.BigDecimal;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@NoArgsConstructor
+@Table(name="QuantityDiscount")
+
 public class QuantityDiscount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

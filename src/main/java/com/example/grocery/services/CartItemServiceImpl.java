@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.grocery.entities.Beer;
@@ -18,6 +19,7 @@ import com.example.grocery.repositories.BeerRepository;
 import com.example.grocery.repositories.BreadDiscountRepository;
 import com.example.grocery.repositories.BreadRepository;
 import com.example.grocery.repositories.CartItemRepository;
+import com.example.grocery.repositories.InventoryRepository;
 import com.example.grocery.repositories.QuantityDiscountRepository;
 import com.example.grocery.repositories.VegetableDiscountRepository;
 import com.example.grocery.repositories.VegetableRepository;
@@ -27,29 +29,22 @@ import jakarta.transaction.Transactional;
 @Service
 public class CartItemServiceImpl implements CartItemService{
 
-    private final CartItemRepository cartItemRepository;
-    private final BeerRepository beerRepository;
-    private final BreadRepository breadRepository;
-    private final VegetableRepository vegetableRepository;
-    private final QuantityDiscountRepository quantityDiscountRepository;
-    private final BreadDiscountRepository breadDiscountRepository;
-    private final VegetableDiscountRepository vegetableDiscountRepository;
-
-    public CartItemServiceImpl(CartItemRepository cartItemRepository, 
-    BeerRepository beerRepository, 
-    BreadRepository breadRepository, 
-    VegetableRepository vegetableRepository,
-    QuantityDiscountRepository quantityDiscountRepository,
-    BreadDiscountRepository breadDiscountRepository,
-    VegetableDiscountRepository vegetableDiscountRepository) {
-        this.cartItemRepository = cartItemRepository;
-        this.beerRepository = beerRepository;
-        this.breadRepository = breadRepository;
-        this.vegetableRepository = vegetableRepository;
-        this.quantityDiscountRepository = quantityDiscountRepository;
-        this.breadDiscountRepository = breadDiscountRepository;
-        this.vegetableDiscountRepository = vegetableDiscountRepository;
-    }
+    @Autowired
+    private CartItemRepository cartItemRepository;
+    @Autowired
+    private BeerRepository beerRepository;
+    @Autowired
+    private BreadRepository breadRepository;
+    @Autowired
+    private InventoryRepository inventoryRepository;
+    @Autowired
+    private VegetableRepository vegetableRepository;
+    @Autowired
+    private QuantityDiscountRepository quantityDiscountRepository;
+    @Autowired
+    private BreadDiscountRepository breadDiscountRepository;
+    @Autowired
+    private VegetableDiscountRepository vegetableDiscountRepository;    
     
 
     @Override
@@ -70,26 +65,28 @@ public class CartItemServiceImpl implements CartItemService{
     @Transactional
     @Override
     public CartItem addCartItem(Long inventoryId, int quantity) {
-        CartItem cartItem = cartItemRepository.findById(inventoryId).orElseThrow(()-> new RuntimeException("CartItem not found"));
-        cartItem.setQuantity(quantity);
+        Inventory inventory = inventoryRepository.findById(inventoryId).orElseThrow(()-> new RuntimeException("Inventory not found"));
+        BigDecimal price = BigDecimal.ZERO;        
 
-        Inventory inventory = cartItem.getInventory();
-        BigDecimal price = BigDecimal.ZERO;
+        CartItem cartItem = new CartItem();
+        cartItem.setInventory(inventory);
+        cartItem.setQuantity(quantity);
+        
 
         if (inventory.getProductType().equals("Beer")) {
-            Beer beer = beerRepository.findByInventoryId(inventory.getId()).orElseThrow(()-> new RuntimeException("Beer not found"));
+            Beer beer = beerRepository.findByInventoryId(inventoryId).orElseThrow(()-> new RuntimeException("Beer not found"));
             price = beer.getPricePerUnit().multiply(BigDecimal.valueOf(quantity));
             cartItem.setPrice(price);
             applyBeerDiscount(cartItem, beer);
         }
         else if (inventory.getProductType().equals("Bread")) {
-            Bread bread = breadRepository.findByInventoryId(inventory.getId()).orElseThrow(()-> new RuntimeException("Bread not found"));
+            Bread bread = breadRepository.findByInventoryId(inventoryId).orElseThrow(()-> new RuntimeException("Bread not found"));
             price = bread.getPricePerUnit().multiply(BigDecimal.valueOf(quantity));
             cartItem.setPrice(price);
             applyBreadDiscount(cartItem, bread);
         }
         else if (inventory.getProductType().equals("Vegetable")) {
-            Vegetable vegetable = vegetableRepository.findByInventoryId(inventory.getId()).orElseThrow(()-> new RuntimeException("Bread not found"));
+            Vegetable vegetable = vegetableRepository.findByInventoryId(inventoryId).orElseThrow(()-> new RuntimeException("Bread not found"));
             price = vegetable.getPricePer100g().multiply(BigDecimal.valueOf(quantity));
             cartItem.setPrice(price);
             applyVegetableDiscount(cartItem, vegetable); //might consider splitting by 100 later
@@ -164,7 +161,7 @@ public class CartItemServiceImpl implements CartItemService{
 
     }
 
-
+    @Transactional
     @Override
     public void removeCartItem(Long id) {
         cartItemRepository.deleteById(id);

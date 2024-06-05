@@ -3,7 +3,8 @@ CREATE TABLE Inventory (
     ProductType VARCHAR(50) NOT NULL CHECK (ProductType IN ('Beer', 'Bread', 'Vegetable'))
 );
 
-CREATE TABLE Beers (
+
+CREATE TABLE Beer (
     Id BIGINT AUTO_INCREMENT PRIMARY KEY,
     ProductName VARCHAR(255) NOT NULL,
     PricePerUnit NUMERIC(8, 2) NOT NULL,
@@ -12,7 +13,7 @@ CREATE TABLE Beers (
     FOREIGN KEY (InventoryId) REFERENCES Inventory(Id)
 );
 
-CREATE TABLE Breads (
+CREATE TABLE Bread (
     Id BIGINT AUTO_INCREMENT PRIMARY KEY,
     ProductName VARCHAR(255) NOT NULL,
     PricePerUnit NUMERIC(8, 2) NOT NULL,
@@ -21,7 +22,7 @@ CREATE TABLE Breads (
     FOREIGN KEY (InventoryId) REFERENCES Inventory(Id)
 );
 
-CREATE TABLE Vegetables (
+CREATE TABLE Vegetable (
     Id BIGINT AUTO_INCREMENT PRIMARY KEY,
     ProductName VARCHAR(255) NOT NULL,
     PricePer100g NUMERIC(8, 2) NOT NULL,
@@ -36,7 +37,7 @@ CREATE TABLE QuantityDiscount (
     Quantity INT NOT NULL,
     DiscountAmount NUMERIC(8,2) NOT NULL,
     FOREIGN KEY (InventoryId) REFERENCES Inventory(Id),
-    FOREIGN KEY (BeerId) REFERENCES Beers(Id)
+    FOREIGN KEY (BeerId) REFERENCES Beer(Id)
 );
 
 CREATE TABLE BreadDiscount (
@@ -46,7 +47,7 @@ CREATE TABLE BreadDiscount (
     QuantityMultiplier INT NOT NULL
 );
 
-CREATE TABLE VegetablesDiscount (
+CREATE TABLE VegetableDiscount (
     Id BIGINT AUTO_INCREMENT PRIMARY KEY,
     MinGrams INT NOT NULL,
     MaxGrams INT NOT NULL,
