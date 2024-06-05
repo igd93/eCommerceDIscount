@@ -41,9 +41,9 @@ VALUES  (3, 5, 2),
         (6, 6, 3);
 
 INSERT INTO VegetablesDiscount (MinGrams, MaxGrams, DiscountPercentage)
-VALUES  (0, 100, 0.95),
-        (101, 500, 0.93),
-        (501, 9999, 0.9);
+VALUES  (0, 100, 0.05),
+        (101, 500, 0.07),
+        (501, 9999, 0.1);
 
 
 
