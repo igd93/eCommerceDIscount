@@ -31,10 +31,10 @@ VALUES  ('Ciabata', 1.49, 1, 7),
         ('Rye Bread', 1.69, 4, 8),
         ('Baguette', 1.79, 6, 9);
 
-INSERT INTO QuantityDiscount (InventoryId, Quantity, DiscountAmount)
-VALUES  (1, 6, 2),
-        (2, 6, 3),
-        (3, 6, 4);
+INSERT INTO QuantityDiscount (InventoryId, Quantity, BeerId, DiscountAmount)
+VALUES  (1, 6, 1, 2),
+        (2, 6, 2, 3),
+        (3, 6, 3, 4);
 
 INSERT INTO BreadDiscount (MinDaysOld, MaxDaysOld, QuantityMultiplier)
 VALUES  (3, 5, 2),

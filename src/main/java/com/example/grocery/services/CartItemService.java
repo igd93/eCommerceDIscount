@@ -2,9 +2,22 @@ package com.example.grocery.services;
 
 import java.util.List;
 
+import com.example.grocery.entities.Beer;
+import com.example.grocery.entities.Bread;
 import com.example.grocery.entities.CartItem;
+import com.example.grocery.entities.Vegetable;
 
 public interface CartItemService {
+
+    CartItem addCartItem(Long inventoryId, int quantity);
+
+    CartItem updateCartItem(Long cartItemId, int quantity);
+
+    void applyBeerDiscount(CartItem cartItem, Beer beer);
+
+    void applyBreadDiscount(CartItem cartItem, Bread bread);
+
+    void applyVegetableDiscount(CartItem cartItem, Vegetable vegetable);
 
     List<CartItem> findAll();
 
@@ -12,6 +25,6 @@ public interface CartItemService {
 
     CartItem save(CartItem cartItem);
 
-    void deleteById(Long id);
+    void removeCartItem(Long id);
     
 }
