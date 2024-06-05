@@ -126,6 +126,15 @@ public class CartItemServiceImpl implements CartItemService{
         return cartItemRepository.save(cartItem);
     }
 
+    @Override
+    public BigDecimal calculateTotalAmount(List<CartItem> cartItems) {
+        BigDecimal totalAmount = BigDecimal.ZERO;
+        for (CartItem cartItem : cartItems) {
+            totalAmount = totalAmount.add(cartItem.getPrice());
+        }
+        return totalAmount;
+    }
+
 
     @Override
     public void applyBeerDiscount(CartItem cartItem, Beer beer) {

@@ -2,6 +2,9 @@ package com.example.grocery.controllers;
 
 import java.util.List;
 
+import java.util.Map;
+import java.math.BigDecimal;
+import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,7 +32,14 @@ public class CartItemController {
         if (cartItems.isEmpty()) {
             return ResponseEntity.ok("The shopping cart is empty");
         }
-        return ResponseEntity.ok(cartItems);
+        BigDecimal totalAmount = cartItems.stream()
+                                          .map(CartItem::getPrice)
+                                          .reduce(BigDecimal.ZERO, BigDecimal::add);
+                                          
+        Map<String, Object> response = new HashMap<>();
+        response.put("cartItems", cartItems);
+        response.put("totalAmount", totalAmount);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/add")
