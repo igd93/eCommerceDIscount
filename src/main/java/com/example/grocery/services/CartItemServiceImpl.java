@@ -77,18 +77,21 @@ public class CartItemServiceImpl implements CartItemService{
             Beer beer = beerRepository.findByInventoryId(inventoryId).orElseThrow(()-> new RuntimeException("Beer not found"));
             price = beer.getPricePerUnit().multiply(BigDecimal.valueOf(quantity));
             cartItem.setPrice(price);
+            cartItem.setProductName(beer.getProductName());
             applyBeerDiscount(cartItem, beer);
         }
         else if (inventory.getProductType().equals("Bread")) {
             Bread bread = breadRepository.findByInventoryId(inventoryId).orElseThrow(()-> new RuntimeException("Bread not found"));
             price = bread.getPricePerUnit().multiply(BigDecimal.valueOf(quantity));
             cartItem.setPrice(price);
+            cartItem.setProductName(bread.getProductName());
             applyBreadDiscount(cartItem, bread);
         }
         else if (inventory.getProductType().equals("Vegetable")) {
             Vegetable vegetable = vegetableRepository.findByInventoryId(inventoryId).orElseThrow(()-> new RuntimeException("Vegetable not found"));
             price = vegetable.getPricePer100g().multiply(BigDecimal.valueOf(quantity / 100.0));
             cartItem.setPrice(price);
+            cartItem.setProductName(vegetable.getProductName());
             applyVegetableDiscount(cartItem, vegetable); //might consider splitting by 100 later
         }
 
@@ -108,18 +111,21 @@ public class CartItemServiceImpl implements CartItemService{
             Beer beer = beerRepository.findByInventoryId(inventory.getId()).orElseThrow(()-> new RuntimeException("Beer not found"));
             price = beer.getPricePerUnit().multiply(BigDecimal.valueOf(quantity));
             cartItem.setPrice(price);
+            cartItem.setProductName(beer.getProductName());
             applyBeerDiscount(cartItem, beer);
         }
         else if (inventory.getProductType().equals("Bread")) {
             Bread bread = breadRepository.findByInventoryId(inventory.getId()).orElseThrow(()-> new RuntimeException("Bread not found"));
             price = bread.getPricePerUnit().multiply(BigDecimal.valueOf(quantity));
             cartItem.setPrice(price);
+            cartItem.setProductName(bread.getProductName());
             applyBreadDiscount(cartItem, bread);
         }
         else if (inventory.getProductType().equals("Vegetable")) {
             Vegetable vegetable = vegetableRepository.findByInventoryId(inventory.getId()).orElseThrow(()-> new RuntimeException("Bread not found"));
             price = vegetable.getPricePer100g().multiply(BigDecimal.valueOf(quantity / 100.0));
             cartItem.setPrice(price);
+            cartItem.setProductName(vegetable.getProductName());
             applyVegetableDiscount(cartItem, vegetable); //might consider splitting by 100 later
         }
 

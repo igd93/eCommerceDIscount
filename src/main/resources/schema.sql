@@ -59,5 +59,6 @@ CREATE TABLE CartItem (
     InventoryId BIGINT NOT NULL,
     Quantity INT NOT NULL, -- Quantity in units or grams
     Price NUMERIC(8,2) NOT NULL,
+    ProductName VARCHAR(255) NOT NULL,
     FOREIGN KEY (InventoryId) REFERENCES Inventory(Id)
 );

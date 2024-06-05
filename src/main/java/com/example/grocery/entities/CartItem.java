@@ -22,5 +22,8 @@ public class CartItem {
 
     @Column(nullable = false)
     private BigDecimal price;
+
+    @Column(nullable = false)
+    private String productName;
     
 }
