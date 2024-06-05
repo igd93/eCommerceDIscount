@@ -18,10 +18,7 @@ public class Vegetable {
     private String productName;
     
     @Column(nullable = false)
-    private BigDecimal pricePer100g;
-
-    @Column(nullable=false)
-    private Integer age;
+    private BigDecimal pricePer100g;    
 
     @OneToOne
     @JoinColumn(name="inventoryId", unique = true, nullable=false)
