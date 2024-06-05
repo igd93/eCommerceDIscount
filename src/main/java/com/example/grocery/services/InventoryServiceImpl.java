@@ -2,9 +2,12 @@ package com.example.grocery.services;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.example.grocery.entities.Inventory;
 import com.example.grocery.repositories.InventoryRepository;
 
+@Service
 public class InventoryServiceImpl implements InventoryService {
 
     private final InventoryRepository inventoryRepository;

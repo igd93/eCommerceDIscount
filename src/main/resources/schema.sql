@@ -32,9 +32,11 @@ CREATE TABLE Vegetables (
 CREATE TABLE QuantityDiscount (
     Id BIGINT AUTO_INCREMENT PRIMARY KEY,
     InventoryId BIGINT NOT NULL,
+    BeerId BIGINT NOT NULL,
     Quantity INT NOT NULL,
-    DiscountAmount INT NOT NULL,
-    FOREIGN KEY (InventoryId) REFERENCES Inventory(Id)
+    DiscountAmount NUMERIC(8,2) NOT NULL,
+    FOREIGN KEY (InventoryId) REFERENCES Inventory(Id),
+    FOREIGN KEY (BeerId) REFERENCES Beers(Id)
 );
 
 CREATE TABLE BreadDiscount (

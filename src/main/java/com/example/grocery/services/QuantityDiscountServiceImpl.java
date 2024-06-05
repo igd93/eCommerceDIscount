@@ -2,9 +2,11 @@ package com.example.grocery.services;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.example.grocery.entities.QuantityDiscount;
 import com.example.grocery.repositories.QuantityDiscountRepository;
-
+@Service
 public class QuantityDiscountServiceImpl implements QuantityDiscountService{
 
     private final QuantityDiscountRepository quantityDiscountRepository;

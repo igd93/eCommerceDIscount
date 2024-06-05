@@ -2,9 +2,12 @@ package com.example.grocery.services;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.example.grocery.entities.CartItem;
 import com.example.grocery.repositories.CartItemRepository;
 
+@Service
 public class CartItemServiceImpl implements CartItemService{
 
     private final CartItemRepository cartItemRepository;

@@ -2,9 +2,12 @@ package com.example.grocery.services;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.example.grocery.entities.Vegetable;
 import com.example.grocery.repositories.VegetableRepository;
 
+@Service
 public class VegetableServiceImpl implements VegetableService{
 
     private final VegetableRepository vegetableRepository;

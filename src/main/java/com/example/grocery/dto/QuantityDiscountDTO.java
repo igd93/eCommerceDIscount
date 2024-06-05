@@ -1,5 +1,7 @@
 package com.example.grocery.dto;
 
+import java.math.BigDecimal;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -10,6 +12,6 @@ public class QuantityDiscountDTO {
     private Long id;   
     private Long inventoryId;    
     private Integer quantity;    
-    private Integer discountAMount;
+    private BigDecimal discountAMount;
     
 }
