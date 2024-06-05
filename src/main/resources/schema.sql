@@ -7,7 +7,7 @@ CREATE TABLE Beers (
     Id BIGINT AUTO_INCREMENT PRIMARY KEY,
     ProductName VARCHAR(255) NOT NULL,
     PricePerUnit NUMERIC(8, 2) NOT NULL,
-    IsPack BOOLEAN,
+    IsPack BOOLEAN NOT NULL,
     InventoryId BIGINT UNIQUE NOT NULL,
     FOREIGN KEY (InventoryId) REFERENCES Inventory(Id)
 );
