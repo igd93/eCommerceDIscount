@@ -1,6 +1,7 @@
 package com.example.grocery.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -22,8 +23,8 @@ public class BreadServiceImpl implements BreadService{
     }
 
     @Override
-    public Bread findById(Long id) {
-        return breadRepository.findById(id).orElse(null);
+    public Optional<Bread> findById(Long id) {
+        return breadRepository.findById(id);
     }
 
     @Override
