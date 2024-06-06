@@ -29,23 +29,34 @@ import jakarta.transaction.Transactional;
 @Service
 public class CartItemServiceImpl implements CartItemService{
 
-    @Autowired
-    private CartItemRepository cartItemRepository;
-    @Autowired
-    private BeerRepository beerRepository;
-    @Autowired
-    private BreadRepository breadRepository;
-    @Autowired
-    private InventoryRepository inventoryRepository;
-    @Autowired
-    private VegetableRepository vegetableRepository;
-    @Autowired
-    private QuantityDiscountRepository quantityDiscountRepository;
-    @Autowired
-    private BreadDiscountRepository breadDiscountRepository;
-    @Autowired
-    private VegetableDiscountRepository vegetableDiscountRepository;    
     
+    private final CartItemRepository cartItemRepository;    
+    private final BeerRepository beerRepository;    
+    private final BreadRepository breadRepository;   
+    private final InventoryRepository inventoryRepository;    
+    private final VegetableRepository vegetableRepository;    
+    private final QuantityDiscountRepository quantityDiscountRepository;
+    private final BreadDiscountRepository breadDiscountRepository;    
+    private final VegetableDiscountRepository vegetableDiscountRepository;    
+    
+    @Autowired
+    public CartItemServiceImpl(CartItemRepository cartItemRepository,
+    BeerRepository beerRepository,
+    BreadRepository breadRepository,
+    InventoryRepository inventoryRepository,
+    VegetableRepository vegetableRepository,
+    QuantityDiscountRepository quantityDiscountRepository,
+    BreadDiscountRepository breadDiscountRepository,
+    VegetableDiscountRepository vegetableDiscountRepository) {
+        this.cartItemRepository = cartItemRepository;
+        this.beerRepository = beerRepository;
+        this.breadRepository = breadRepository;
+        this.inventoryRepository = inventoryRepository;
+        this.vegetableRepository = vegetableRepository;
+        this.quantityDiscountRepository = quantityDiscountRepository;
+        this.breadDiscountRepository = breadDiscountRepository;
+        this.vegetableDiscountRepository = vegetableDiscountRepository;
+    }
 
     @Override
     public List<CartItem> findAll() {
@@ -92,7 +103,7 @@ public class CartItemServiceImpl implements CartItemService{
             price = vegetable.getPricePer100g().multiply(BigDecimal.valueOf(quantity / 100.0));
             cartItem.setPrice(price);
             cartItem.setProductName(vegetable.getProductName());
-            applyVegetableDiscount(cartItem, vegetable); //might consider splitting by 100 later
+            applyVegetableDiscount(cartItem, vegetable); 
         }
 
         return cartItemRepository.save(cartItem);
@@ -126,7 +137,7 @@ public class CartItemServiceImpl implements CartItemService{
             price = vegetable.getPricePer100g().multiply(BigDecimal.valueOf(quantity / 100.0));
             cartItem.setPrice(price);
             cartItem.setProductName(vegetable.getProductName());
-            applyVegetableDiscount(cartItem, vegetable); //might consider splitting by 100 later
+            applyVegetableDiscount(cartItem, vegetable); 
         }
 
         return cartItemRepository.save(cartItem);
@@ -144,11 +155,16 @@ public class CartItemServiceImpl implements CartItemService{
 
     @Override
     public void applyBeerDiscount(CartItem cartItem, Beer beer) {
-        Optional<QuantityDiscount> discountOpt = quantityDiscountRepository.findByBeerIdAndQUantity(beer.getId(), cartItem.getQuantity());
+        Optional<QuantityDiscount> discountOpt = quantityDiscountRepository.findByBeerId(beer.getId());
 
         if(discountOpt.isPresent()) {
             QuantityDiscount quantityDiscount = discountOpt.get();
-            cartItem.setPrice(cartItem.getPrice().subtract(quantityDiscount.getDiscountAmount()));
+            int discountQuantity = quantityDiscount.getQuantity();
+            int applicableMultiplier = cartItem.getQuantity() / discountQuantity;
+            if (applicableMultiplier > 0) {
+                BigDecimal totalDiscount = quantityDiscount.getDiscountAmount().multiply(BigDecimal.valueOf(applicableMultiplier));
+                cartItem.setPrice(cartItem.getPrice().subtract(totalDiscount));
+            }
         }
     }
 
