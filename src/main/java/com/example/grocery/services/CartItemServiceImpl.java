@@ -76,14 +76,22 @@ public class CartItemServiceImpl implements CartItemService{
     @Transactional
     @Override
     public CartItem addCartItem(Long inventoryId, int quantity) {
-        Inventory inventory = inventoryRepository.findById(inventoryId).orElseThrow(()-> new RuntimeException("Inventory not found"));
-        BigDecimal price = BigDecimal.ZERO;        
 
-        CartItem cartItem = new CartItem();
+        CartItem cartItem;
+        Inventory inventory = inventoryRepository.findById(inventoryId).orElseThrow(()-> new RuntimeException("Inventory not found"));        
+        Optional<CartItem> existingCartItemOpt = cartItemRepository.findByInventoryId(inventoryId);
+
+        if (existingCartItemOpt.isPresent()) {
+            cartItem = existingCartItemOpt.get();
+            quantity += cartItem.getQuantity();
+            cartItem.setQuantity(quantity);
+        }
+
+        else {cartItem = new CartItem();        
         cartItem.setInventory(inventory);
-        cartItem.setQuantity(quantity);
+        cartItem.setQuantity(quantity);}
         
-
+        BigDecimal price = BigDecimal.ZERO;
         if (inventory.getProductType().equals("Beer")) {
             Beer beer = beerRepository.findByInventoryId(inventoryId).orElseThrow(()-> new RuntimeException("Beer not found"));
             price = beer.getPricePerUnit().multiply(BigDecimal.valueOf(quantity));
