@@ -1,6 +1,7 @@
 package com.example.grocery.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -21,8 +22,8 @@ public class QuantityDiscountServiceImpl implements QuantityDiscountService{
     }
 
     @Override
-    public QuantityDiscount findById(Long id) {
-        return quantityDiscountRepository.findById(id).orElse(null);
+    public Optional<QuantityDiscount> findById(Long id) {
+        return quantityDiscountRepository.findById(id);
     }
 
     @Override
