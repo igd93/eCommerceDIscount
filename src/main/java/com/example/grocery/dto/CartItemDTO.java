@@ -1,13 +1,15 @@
 package com.example.grocery.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import java.math.BigDecimal;
 
-@AllArgsConstructor
-@Getter
+import lombok.Data;
+
+@Data
 public class CartItemDTO {
     private Long id;
-    private Long invnetoryId;
+    private Long inventoryId;
+    private String productName;
+    private String productType;  
     private Integer quantity;
-    private Double price;    
+    private BigDecimal price;    
 }

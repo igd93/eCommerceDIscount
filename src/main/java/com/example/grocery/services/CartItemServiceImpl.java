@@ -3,10 +3,13 @@ package com.example.grocery.services;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.grocery.dto.CartItemDTO;
 import com.example.grocery.entities.Beer;
 import com.example.grocery.entities.Bread;
 import com.example.grocery.entities.BreadDiscount;
@@ -37,7 +40,8 @@ public class CartItemServiceImpl implements CartItemService{
     private final VegetableRepository vegetableRepository;    
     private final QuantityDiscountRepository quantityDiscountRepository;
     private final BreadDiscountRepository breadDiscountRepository;    
-    private final VegetableDiscountRepository vegetableDiscountRepository;    
+    private final VegetableDiscountRepository vegetableDiscountRepository;
+    private final ModelMapper modelMapper; 
     
     @Autowired
     public CartItemServiceImpl(CartItemRepository cartItemRepository,
@@ -47,7 +51,8 @@ public class CartItemServiceImpl implements CartItemService{
     VegetableRepository vegetableRepository,
     QuantityDiscountRepository quantityDiscountRepository,
     BreadDiscountRepository breadDiscountRepository,
-    VegetableDiscountRepository vegetableDiscountRepository) {
+    VegetableDiscountRepository vegetableDiscountRepository,
+    ModelMapper modelMapper) {
         this.cartItemRepository = cartItemRepository;
         this.beerRepository = beerRepository;
         this.breadRepository = breadRepository;
@@ -56,12 +61,14 @@ public class CartItemServiceImpl implements CartItemService{
         this.quantityDiscountRepository = quantityDiscountRepository;
         this.breadDiscountRepository = breadDiscountRepository;
         this.vegetableDiscountRepository = vegetableDiscountRepository;
+        this.modelMapper = modelMapper;
     }
 
     @Override
-    public List<CartItem> findAll() {
-        return cartItemRepository.findAll();
-    }
+    public List<CartItemDTO> findAll() {
+        List<CartItem> cartItems = cartItemRepository.findAll();
+        return cartItems.stream().map(this::convertToDTO).collect(Collectors.toList())
+;    }
 
     @Override
     public CartItem findById(Long id) {
@@ -75,7 +82,7 @@ public class CartItemServiceImpl implements CartItemService{
 
     @Transactional
     @Override
-    public CartItem addCartItem(Long inventoryId, int quantity) {
+    public CartItemDTO addCartItem(Long inventoryId, int quantity) {
 
         CartItem cartItem;
         Inventory inventory = inventoryRepository.findById(inventoryId).orElseThrow(()-> new RuntimeException("Inventory not found"));        
@@ -114,12 +121,13 @@ public class CartItemServiceImpl implements CartItemService{
             applyVegetableDiscount(cartItem, vegetable); 
         }
 
-        return cartItemRepository.save(cartItem);
+       cartItem  = cartItemRepository.save(cartItem);
+       return convertToDTO(cartItem);
     }
 
     
     @Override
-    public CartItem updateCartItem(Long cartItemId, int quantity) {
+    public CartItemDTO updateCartItem(Long cartItemId, int quantity) {
         CartItem cartItem = cartItemRepository.findById(cartItemId).orElseThrow(() -> new RuntimeException("CartItem not found"));
         cartItem.setQuantity(quantity);
         
@@ -148,7 +156,9 @@ public class CartItemServiceImpl implements CartItemService{
             applyVegetableDiscount(cartItem, vegetable); 
         }
 
-        return cartItemRepository.save(cartItem);
+        cartItem = cartItemRepository.save(cartItem);
+        return convertToDTO(cartItem);
+       
     }
 
     @Override
@@ -204,6 +214,10 @@ public class CartItemServiceImpl implements CartItemService{
     @Override
     public void removeCartItem(Long id) {
         cartItemRepository.deleteById(id);
+    }
+
+    private CartItemDTO convertToDTO(CartItem cartItem) {
+        return modelMapper.map(cartItem, CartItemDTO.class);
     }
     
 }

@@ -2,6 +2,7 @@ package com.example.grocery.services;
 
 import java.util.List;
 
+import com.example.grocery.dto.CartItemDTO;
 import com.example.grocery.entities.Beer;
 import com.example.grocery.entities.Bread;
 import com.example.grocery.entities.CartItem;
@@ -10,9 +11,9 @@ import java.math.BigDecimal;
 
 public interface CartItemService {
 
-    CartItem addCartItem(Long inventoryId, int quantity);
+    CartItemDTO addCartItem(Long inventoryId, int quantity);
 
-    CartItem updateCartItem(Long id, int quantity);
+    CartItemDTO updateCartItem(Long id, int quantity);
 
     void applyBeerDiscount(CartItem cartItem, Beer beer);
 
@@ -22,7 +23,7 @@ public interface CartItemService {
 
     BigDecimal calculateTotalAmount(List<CartItem> cartItems);
 
-    List<CartItem> findAll();
+    List<CartItemDTO> findAll();
 
     CartItem findById(Long id);
 

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.grocery.entities.CartItem;
+import com.example.grocery.dto.CartItemDTO;
 import com.example.grocery.services.CartItemService;
 
 @RestController
@@ -28,12 +28,12 @@ public class CartItemController {
 
     @GetMapping
     public ResponseEntity<?> getCartItems() {
-        List<CartItem> cartItems = cartItemService.findAll();
+        List<CartItemDTO> cartItems = cartItemService.findAll();
         if (cartItems.isEmpty()) {
             return ResponseEntity.ok("The shopping cart is empty");
         }
         BigDecimal totalAmount = cartItems.stream()
-                                          .map(CartItem::getPrice)
+                                          .map(CartItemDTO::getPrice)
                                           .reduce(BigDecimal.ZERO, BigDecimal::add);
                                           
         Map<String, Object> response = new HashMap<>();
@@ -43,15 +43,15 @@ public class CartItemController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<CartItem> addCartItem(@RequestParam Long inventoryId, @RequestParam int quantity){
-        CartItem cartItem = cartItemService.addCartItem(inventoryId, quantity);
-        return ResponseEntity.ok(cartItem);
+    public ResponseEntity<CartItemDTO> addCartItem(@RequestParam Long inventoryId, @RequestParam int quantity){
+        CartItemDTO cartItemDTO = cartItemService.addCartItem(inventoryId, quantity);
+        return ResponseEntity.ok(cartItemDTO);
     }    
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<CartItem> updateCartItem(@PathVariable Long id, @RequestParam int quantity) {
-        CartItem cartItem = cartItemService.updateCartItem(id, quantity);
-        return ResponseEntity.ok(cartItem);
+    public ResponseEntity<CartItemDTO> updateCartItem(@PathVariable Long id, @RequestParam int quantity) {
+        CartItemDTO cartItemDTO = cartItemService.updateCartItem(id, quantity);
+        return ResponseEntity.ok(cartItemDTO);
     }
 
     @DeleteMapping("/remove/{id}")
