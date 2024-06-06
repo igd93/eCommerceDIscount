@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.grocery.entities.Beer;
-import com.example.grocery.services.BeerServiceImpl;
+import com.example.grocery.services.BeerService;
 
 
 
@@ -25,8 +25,13 @@ import com.example.grocery.services.BeerServiceImpl;
 @RequestMapping("/api/beers")
 public class BeerController {
 
+    
+    private final BeerService beerService;
+
     @Autowired
-    private BeerServiceImpl beerService;
+    public BeerController(BeerService beerService){
+        this.beerService = beerService;
+    }
 
     @GetMapping
     public List<Beer> getAllBeers() {
