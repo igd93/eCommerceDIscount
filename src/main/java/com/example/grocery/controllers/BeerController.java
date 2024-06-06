@@ -42,8 +42,8 @@ public class BeerController {
     public ResponseEntity<Beer> getBeerById(@PathVariable("id") Long id) {
         Optional<Beer> beer = beerService.findById(id);
         return beer
-        .map(b -> new ResponseEntity<>(b, HttpStatus.OK))
-        .orElseGet(()-> ResponseEntity.notFound().build());
+                .map(b -> new ResponseEntity<>(b, HttpStatus.OK))
+                .orElseGet(()-> ResponseEntity.notFound().build());
     }
 
     @PostMapping
