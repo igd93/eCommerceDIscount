@@ -7,22 +7,21 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name="Vegetable")
+@Table(name = "Vegetable")
 public class Vegetable {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable=false)
-    private String productName;
-    
     @Column(nullable = false)
-    private BigDecimal pricePer100g;    
+    private String productName;
+
+    @Column(nullable = false)
+    private BigDecimal pricePer100g;
 
     @OneToOne
-    @JoinColumn(name="inventoryId", unique = true, nullable=false)
+    @JoinColumn(name = "inventoryId", unique = true, nullable = false)
     private Inventory inventory;
 
-    
 }

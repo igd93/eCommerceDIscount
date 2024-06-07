@@ -18,7 +18,7 @@ public class InventoryServiceImpl implements InventoryService {
 
     @Override
     public List<Inventory> findAll() {
-        return inventoryRepository.findAll();        
+        return inventoryRepository.findAll();
     }
 
     @Override
@@ -36,5 +36,4 @@ public class InventoryServiceImpl implements InventoryService {
         inventoryRepository.deleteById(Id);
     }
 
-    
 }

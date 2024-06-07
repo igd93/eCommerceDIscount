@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import com.example.grocery.entities.Beer;
 
 @Repository
-public interface BeerRepository extends JpaRepository<Beer, Long>{
-    Optional<Beer> findByInventoryId(Long inventoryId);    
+public interface BeerRepository extends JpaRepository<Beer, Long> {
+    Optional<Beer> findByInventoryId(Long inventoryId);
 }

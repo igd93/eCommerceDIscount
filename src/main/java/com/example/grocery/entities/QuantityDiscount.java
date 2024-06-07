@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name="QuantityDiscount")
+@Table(name = "QuantityDiscount")
 
 public class QuantityDiscount {
     @Id
@@ -19,13 +19,13 @@ public class QuantityDiscount {
     private Inventory inventory;
 
     @ManyToOne
-    @JoinColumn(name = "BeerId", nullable=false)
+    @JoinColumn(name = "BeerId", nullable = false)
     private Beer beer;
 
-    @Column(nullable=false)
+    @Column(nullable = false)
     private Integer quantity;
 
-    @Column(nullable=false, scale = 8, precision = 2)
+    @Column(nullable = false, scale = 8, precision = 2)
     private BigDecimal discountAmount;
-    
+
 }

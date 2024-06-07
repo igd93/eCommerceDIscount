@@ -22,7 +22,7 @@ import com.example.grocery.entities.QuantityDiscount;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/vegetables")
+@RequestMapping("/api/beer_discounts/")
 public class QuantityDiscountController {
 
     private final QuantityDiscountService quantityDiscountService;
@@ -38,16 +38,16 @@ public class QuantityDiscountController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<QuantityDiscount> getQuantityDiscountById (@PathVariable("id") Long id) {
+    public ResponseEntity<QuantityDiscount> getQuantityDiscountById(@PathVariable("id") Long id) {
         Optional<QuantityDiscount> quantityDiscount = quantityDiscountService.findById(id);
         return quantityDiscount
                 .map(qd -> new ResponseEntity<>(qd, HttpStatus.OK))
-                .orElseGet(()-> ResponseEntity.notFound().build());
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
     public ResponseEntity<?> createQuantityDiscount(@RequestBody QuantityDiscount quantityDiscount) {
-        try{
+        try {
             QuantityDiscount saveDiscount = quantityDiscountService.save(quantityDiscount);
             return new ResponseEntity<>(saveDiscount, HttpStatus.CREATED);
         } catch (Exception e) {
@@ -57,7 +57,8 @@ public class QuantityDiscountController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<QuantityDiscount> updateQuantityDiscount(@PathVariable("id") Long id, @RequestBody QuantityDiscount quantityDiscount) {
+    public ResponseEntity<QuantityDiscount> updateQuantityDiscount(@PathVariable("id") Long id,
+            @RequestBody QuantityDiscount quantityDiscount) {
         Optional<QuantityDiscount> quOptional = quantityDiscountService.findById(id);
         if (quOptional.isPresent()) {
             QuantityDiscount existingDiscount = quOptional.get();
@@ -72,7 +73,8 @@ public class QuantityDiscountController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<QuantityDiscount> partialUpdateQuantityDiscount(@PathVariable("id") Long id, @RequestBody QuantityDiscount quantityDiscount) {
+    public ResponseEntity<QuantityDiscount> partialUpdateQuantityDiscount(@PathVariable("id") Long id,
+            @RequestBody QuantityDiscount quantityDiscount) {
         Optional<QuantityDiscount> quOptional = quantityDiscountService.findById(id);
         if (quOptional.isPresent()) {
             QuantityDiscount exisitingDiscount = quOptional.get();
@@ -109,5 +111,5 @@ public class QuantityDiscountController {
         }
         return ResponseEntity.notFound().build();
     }
-    
+
 }

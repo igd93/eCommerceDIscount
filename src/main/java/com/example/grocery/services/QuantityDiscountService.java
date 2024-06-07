@@ -14,5 +14,5 @@ public interface QuantityDiscountService {
     QuantityDiscount save(QuantityDiscount quantityDiscount);
 
     void deleteById(Long id);
-    
+
 }

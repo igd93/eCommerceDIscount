@@ -11,7 +11,7 @@ import lombok.Data;
 
 public class Beer {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
@@ -24,7 +24,7 @@ public class Beer {
     private Boolean isPack;
 
     @OneToOne
-    @JoinColumn(name="inventoryId", unique = true, nullable = false)
+    @JoinColumn(name = "inventoryId", unique = true, nullable = false)
     private Inventory inventory;
-    
+
 }

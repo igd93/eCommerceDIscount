@@ -9,7 +9,7 @@ import com.example.grocery.entities.Vegetable;
 import com.example.grocery.repositories.VegetableRepository;
 
 @Service
-public class VegetableServiceImpl implements VegetableService{
+public class VegetableServiceImpl implements VegetableService {
 
     private final VegetableRepository vegetableRepository;
 
@@ -36,5 +36,5 @@ public class VegetableServiceImpl implements VegetableService{
     public void deleteById(Long id) {
         vegetableRepository.deleteById(id);
     }
-    
+
 }

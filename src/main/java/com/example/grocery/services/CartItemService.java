@@ -30,5 +30,5 @@ public interface CartItemService {
     CartItem save(CartItem cartItem);
 
     void removeCartItem(Long id);
-    
+
 }

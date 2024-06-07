@@ -7,14 +7,14 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name="CartItem")
+@Table(name = "CartItem")
 public class CartItem {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name="inventoryId", nullable = false)
+    @JoinColumn(name = "inventoryId", nullable = false)
     private Inventory inventory;
 
     @Column(nullable = false)
@@ -25,5 +25,5 @@ public class CartItem {
 
     @Column(nullable = false)
     private String productName;
-    
+
 }

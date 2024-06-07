@@ -7,8 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.example.grocery.entities.QuantityDiscount;
 import com.example.grocery.repositories.QuantityDiscountRepository;
+
 @Service
-public class QuantityDiscountServiceImpl implements QuantityDiscountService{
+public class QuantityDiscountServiceImpl implements QuantityDiscountService {
 
     private final QuantityDiscountRepository quantityDiscountRepository;
 
@@ -35,5 +36,5 @@ public class QuantityDiscountServiceImpl implements QuantityDiscountService{
     public void deleteById(Long id) {
         quantityDiscountRepository.deleteById(id);
     }
-    
+
 }

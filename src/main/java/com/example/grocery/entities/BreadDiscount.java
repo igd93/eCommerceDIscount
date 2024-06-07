@@ -5,18 +5,18 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name="BreadDiscount")
+@Table(name = "BreadDiscount")
 public class BreadDiscount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable=false)
+    @Column(nullable = false)
     private Integer minDaysOld;
 
-    @Column(nullable=false)
+    @Column(nullable = false)
     private Integer maxDaysOld;
-    
-    @Column(nullable=false)
+
+    @Column(nullable = false)
     private Integer quantityMultiplier;
 }

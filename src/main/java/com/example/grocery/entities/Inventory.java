@@ -5,14 +5,14 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name="Inventory")
+@Table(name = "Inventory")
 public class Inventory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "ProductType", nullable=false)
+    @Column(name = "ProductType", nullable = false)
     private String productType;
-    
+
 }

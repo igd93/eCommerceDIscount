@@ -9,7 +9,7 @@ import com.example.grocery.entities.Bread;
 import com.example.grocery.repositories.BreadRepository;
 
 @Service
-public class BreadServiceImpl implements BreadService{
+public class BreadServiceImpl implements BreadService {
 
     private final BreadRepository breadRepository;
 
@@ -19,7 +19,7 @@ public class BreadServiceImpl implements BreadService{
 
     @Override
     public List<Bread> findAll() {
-        return breadRepository.findAll();                        
+        return breadRepository.findAll();
     }
 
     @Override
@@ -36,5 +36,5 @@ public class BreadServiceImpl implements BreadService{
     public void deleteById(Long id) {
         breadRepository.deleteById(id);
     }
-    
+
 }

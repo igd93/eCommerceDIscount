@@ -14,17 +14,17 @@ public class Bread {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable=false)
+    @Column(nullable = false)
     private String productName;
 
-    @Column(nullable=false)
+    @Column(nullable = false)
     private BigDecimal pricePerUnit;
 
-    @Column(nullable=false)
+    @Column(nullable = false)
     private Integer age;
 
     @OneToOne
-    @JoinColumn(name= "inventoryId", unique=true, nullable = false)
+    @JoinColumn(name = "inventoryId", unique = true, nullable = false)
     private Inventory inventory;
-    
+
 }

@@ -20,7 +20,7 @@ import com.example.grocery.entities.Bread;
 import com.example.grocery.services.BreadService;
 
 @RestController
-@RequestMapping("/api/beers")
+@RequestMapping("/api/breads")
 public class BreadController {
 
     private final BreadService breadService;
@@ -40,7 +40,7 @@ public class BreadController {
         Optional<Bread> bread = breadService.findById(id);
         return bread
                 .map(b -> new ResponseEntity<>(b, HttpStatus.OK))
-                .orElseGet(()-> ResponseEntity.notFound().build());
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
@@ -96,5 +96,5 @@ public class BreadController {
         }
         return ResponseEntity.notFound().build();
     }
-    
+
 }

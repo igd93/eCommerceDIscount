@@ -7,11 +7,11 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name="VegetableDiscount")
+@Table(name = "VegetableDiscount")
 public class VegetableDiscount {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
@@ -22,5 +22,5 @@ public class VegetableDiscount {
 
     @Column(nullable = false)
     private BigDecimal discountPercentage;
-    
+
 }

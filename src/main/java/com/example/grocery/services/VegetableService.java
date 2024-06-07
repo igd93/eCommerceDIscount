@@ -13,6 +13,6 @@ public interface VegetableService {
 
     Vegetable save(Vegetable inventory);
 
-    void deleteById(Long Id);   
-    
+    void deleteById(Long Id);
+
 }
