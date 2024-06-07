@@ -33,8 +33,12 @@ public class QuantityDiscountController {
     }
 
     @GetMapping
-    public List<QuantityDiscount> getAllQuantityDiscounts() {
-        return quantityDiscountService.findAll();
+    public ResponseEntity<?> getAllQuantityDiscounts() {
+        List<QuantityDiscount> discounts = quantityDiscountService.findAll();
+        if (!discounts.isEmpty()) {
+            return ResponseEntity.ok("Currently there are no beer discounts");
+        }
+        return new ResponseEntity<>(discounts, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

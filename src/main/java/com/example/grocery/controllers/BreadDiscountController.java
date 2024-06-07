@@ -31,8 +31,12 @@ public class BreadDiscountController {
     }
 
     @GetMapping
-    public List<BreadDiscount> getAllBreadDiscounts() {
-        return breadDiscountService.findAll();
+    public ResponseEntity<?> getAllBreadDiscounts() {
+        List<BreadDiscount> discounts = breadDiscountService.findAll();
+        if (!discounts.isEmpty()) {
+            return ResponseEntity.ok(discounts);
+        }
+        return ResponseEntity.ok("No discounts available for bread at the moment");
     }
 
     @GetMapping("/{id}")

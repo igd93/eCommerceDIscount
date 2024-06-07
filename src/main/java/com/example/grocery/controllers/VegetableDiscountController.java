@@ -30,8 +30,12 @@ public class VegetableDiscountController {
     }
 
     @GetMapping
-    public List<VegetableDiscount> getAllVegetableDiscount() {
-        return vegetableDiscountService.findAll();
+    public ResponseEntity<?> getAllVegetableDiscount() {
+        List<VegetableDiscount> discounts = vegetableDiscountService.findAll();
+        if (!discounts.isEmpty()) {
+            return ResponseEntity.ok(discounts);
+        }
+        return ResponseEntity.ok("Currently there are no discounts for vegetables");
     }
 
     @GetMapping("/{id}")
