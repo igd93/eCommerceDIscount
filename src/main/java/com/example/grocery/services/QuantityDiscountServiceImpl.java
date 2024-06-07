@@ -3,6 +3,7 @@ package com.example.grocery.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.grocery.entities.QuantityDiscount;
@@ -13,6 +14,7 @@ public class QuantityDiscountServiceImpl implements QuantityDiscountService {
 
     private final QuantityDiscountRepository quantityDiscountRepository;
 
+    @Autowired
     public QuantityDiscountServiceImpl(QuantityDiscountRepository quantityDiscountRepository) {
         this.quantityDiscountRepository = quantityDiscountRepository;
     }
