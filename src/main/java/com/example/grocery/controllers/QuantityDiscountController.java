@@ -36,9 +36,9 @@ public class QuantityDiscountController {
     public ResponseEntity<?> getAllQuantityDiscounts() {
         List<QuantityDiscount> discounts = quantityDiscountService.findAll();
         if (!discounts.isEmpty()) {
-            return ResponseEntity.ok("Currently there are no beer discounts");
+            return ResponseEntity.ok(discounts);
         }
-        return new ResponseEntity<>(discounts, HttpStatus.OK);
+        return ResponseEntity.ok("There are currently no beers discounts");
     }
 
     @GetMapping("/{id}")

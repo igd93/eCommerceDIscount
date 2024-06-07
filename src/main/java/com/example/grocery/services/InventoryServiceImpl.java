@@ -1,7 +1,9 @@
 package com.example.grocery.services;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.grocery.entities.Inventory;
@@ -12,6 +14,7 @@ public class InventoryServiceImpl implements InventoryService {
 
     private final InventoryRepository inventoryRepository;
 
+    @Autowired
     public InventoryServiceImpl(InventoryRepository inventoryRepository) {
         this.inventoryRepository = inventoryRepository;
     }
@@ -22,8 +25,8 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
-    public Inventory findById(Long id) {
-        return inventoryRepository.findById(id).orElse(null);
+    public Optional<Inventory> findById(Long id) {
+        return inventoryRepository.findById(id);
     }
 
     @Override
