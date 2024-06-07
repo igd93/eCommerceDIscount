@@ -3,18 +3,24 @@ package com.example.grocery.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.grocery.entities.Beer;
+import com.example.grocery.entities.Inventory;
 import com.example.grocery.repositories.BeerRepository;
+import com.example.grocery.repositories.InventoryRepository;
 
 @Service
-public class BeerServiceImpl implements BeerService{
+public class BeerServiceImpl implements BeerService {
 
     private final BeerRepository beerRepository;
+    private final InventoryRepository inventoryRepository;
 
-    public BeerServiceImpl(BeerRepository beerRepository) {
+    @Autowired
+    public BeerServiceImpl(BeerRepository beerRepository, InventoryRepository inventoryRepository) {
         this.beerRepository = beerRepository;
+        this.inventoryRepository = inventoryRepository;
     }
 
     @Override
@@ -29,6 +35,11 @@ public class BeerServiceImpl implements BeerService{
 
     @Override
     public Beer save(Beer beer) {
+        Inventory inventory = new Inventory();
+        inventory.setProductType("Beer");
+        inventory = inventoryRepository.save(inventory);
+
+        beer.setInventory(inventory);
         return beerRepository.save(beer);
     }
 
@@ -36,5 +47,5 @@ public class BeerServiceImpl implements BeerService{
     public void deleteById(Long id) {
         beerRepository.deleteById(id);
     }
-    
+
 }
