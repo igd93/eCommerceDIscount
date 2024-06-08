@@ -36,12 +36,11 @@ public class BreadDiscountServicelTest {
         discount1 = new BreadDiscount();
         discount1.setId(1L);
         discount1.setQuantityMultiplier(2);
-        ;
 
         discount2 = new BreadDiscount();
         discount2.setId(2L);
         discount2.setQuantityMultiplier(3);
-        ;
+
     }
 
     @Test

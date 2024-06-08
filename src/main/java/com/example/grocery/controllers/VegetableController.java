@@ -70,7 +70,7 @@ public class VegetableController {
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
     })
     @PostMapping
-    public ResponseEntity<?> createBeer(@RequestBody Vegetable vegetable) {
+    public ResponseEntity<?> createVegetable(@RequestBody Vegetable vegetable) {
         try {
             Vegetable saveVegetable = vegetableService.save(vegetable);
             return new ResponseEntity<>(saveVegetable, HttpStatus.CREATED);
