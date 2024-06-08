@@ -63,9 +63,9 @@ This project is a Spring-based application designed to manage an inventory syste
 
 ### Usage
 
-By default, the app runs on http://localhost:8080
-Use the API endpoints to manage inventory items, apply discounts, and manage the shopping cart.
-To access the list of all entry points and allowed methods, use http://localhost:8080/swagger-ui/index.html
+- By default, the app runs on http://localhost:8080
+- Use the API endpoints to manage inventory items, apply discounts, and manage the shopping cart.
+- To access the list of all entry points and allowed methods, use http://localhost:8080/swagger-ui/index.html
 
 ### ToDo
 
