@@ -141,7 +141,7 @@ class BreadDiscountControllerTest {
         ResponseEntity<BreadDiscount> response = breadDiscountController.partialUpdateBreadDiscount(1L, partialUpdate);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(response.getBody().getMinDaysOld()).isEqualTo(4);
+        assertThat(breadDiscount1.getMinDaysOld()).isEqualTo(4);
     }
 
     @Test

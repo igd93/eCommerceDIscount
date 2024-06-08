@@ -143,6 +143,7 @@ public class BeerControllerTest {
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         verify(beerService, times(1)).findById(1L);
         verify(beerService, times(1)).save(any(Beer.class));
+        assertThat(beer1.getProductName()).isEqualTo("German");
     }
 
     @Test
