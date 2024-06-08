@@ -153,7 +153,7 @@ public class CartItemServiceImpl implements CartItemService {
             applyBreadDiscount(cartItem, bread);
         } else if (inventory.getProductType().equals("Vegetable")) {
             Vegetable vegetable = vegetableRepository.findByInventoryId(inventory.getId())
-                    .orElseThrow(() -> new RuntimeException("Bread not found"));
+                    .orElseThrow(() -> new RuntimeException("Vegetable not found"));
             price = vegetable.getPricePer100g().multiply(BigDecimal.valueOf(quantity / 100.0));
             cartItem.setPrice(price);
             cartItem.setProductName(vegetable.getProductName());
@@ -196,8 +196,7 @@ public class CartItemServiceImpl implements CartItemService {
 
         if (breadDiscount != null) {
             int discountedQuantity = cartItem.getQuantity() * breadDiscount.getQuantityMultiplier();
-            BigDecimal discountedPrice = bread.getPricePerUnit().multiply(BigDecimal.valueOf(discountedQuantity));
-            cartItem.setPrice(discountedPrice);
+            cartItem.setQuantity(discountedQuantity);
         }
     }
 
