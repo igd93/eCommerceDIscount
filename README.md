@@ -11,7 +11,7 @@ This project is a Spring-based application designed to manage an inventory syste
 
 ## Database Schema Overview
 
-## For detailed schema overview refer to SCHEMA.md
+### For detailed schema overview refer to [Schema](SCHEMA.md)
 
 ### Tables
 
