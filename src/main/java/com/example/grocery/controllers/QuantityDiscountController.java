@@ -17,12 +17,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.grocery.services.QuantityDiscountService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import com.example.grocery.entities.QuantityDiscount;
 
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/beer_discounts/")
+@Tag(name = "Bread quantity discount controller", description = "API for managing discounts on bread")
 public class QuantityDiscountController {
 
     private final QuantityDiscountService quantityDiscountService;
@@ -32,15 +40,27 @@ public class QuantityDiscountController {
         this.quantityDiscountService = quantityDiscountService;
     }
 
+    @Operation(summary = "Get all bread discounts")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found all beers", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = QuantityDiscount.class)) }),
+            @ApiResponse(responseCode = "404", description = "Beers not found", content = @Content)
+    })
     @GetMapping
     public ResponseEntity<?> getAllQuantityDiscounts() {
         List<QuantityDiscount> discounts = quantityDiscountService.findAll();
         if (!discounts.isEmpty()) {
             return ResponseEntity.ok(discounts);
         }
-        return ResponseEntity.ok("There are currently no beers discounts");
+        return new ResponseEntity<>("There are no bread discounts", HttpStatus.NOT_FOUND);
     }
 
+    @Operation(summary = "Get bread discount by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found the bread discount", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = QuantityDiscount.class)) }),
+            @ApiResponse(responseCode = "404", description = "Bread discount not found", content = @Content)
+    })
     @GetMapping("/{id}")
     public ResponseEntity<QuantityDiscount> getQuantityDiscountById(@PathVariable("id") Long id) {
         Optional<QuantityDiscount> quantityDiscount = quantityDiscountService.findById(id);
@@ -49,6 +69,12 @@ public class QuantityDiscountController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @Operation(summary = "Create a new bread discount")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Bread discount created", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = QuantityDiscount.class)) }),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
+    })
     @PostMapping
     public ResponseEntity<?> createQuantityDiscount(@RequestBody QuantityDiscount quantityDiscount) {
         try {
@@ -60,6 +86,12 @@ public class QuantityDiscountController {
         }
     }
 
+    @Operation(summary = "Update a bread discount by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Bread discount updated", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = QuantityDiscount.class)) }),
+            @ApiResponse(responseCode = "404", description = "Bread discount not found", content = @Content)
+    })
     @PutMapping("/{id}")
     public ResponseEntity<QuantityDiscount> updateQuantityDiscount(@PathVariable("id") Long id,
             @RequestBody QuantityDiscount quantityDiscount) {
@@ -76,6 +108,12 @@ public class QuantityDiscountController {
         return ResponseEntity.notFound().build();
     }
 
+    @Operation(summary = "Partially update a bread discount by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Bread discount partially updated", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = QuantityDiscount.class)) }),
+            @ApiResponse(responseCode = "404", description = "Bread discount not found", content = @Content)
+    })
     @PatchMapping("/{id}")
     public ResponseEntity<QuantityDiscount> partialUpdateQuantityDiscount(@PathVariable("id") Long id,
             @RequestBody QuantityDiscount quantityDiscount) {
@@ -106,6 +144,11 @@ public class QuantityDiscountController {
         return ResponseEntity.notFound().build();
     }
 
+    @Operation(summary = "Delete a beer by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Bread discount deleted", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Bread discount not found", content = @Content)
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteDiscount(@PathVariable("id") Long id) {
         Optional<QuantityDiscount> quOptional = quantityDiscountService.findById(id);

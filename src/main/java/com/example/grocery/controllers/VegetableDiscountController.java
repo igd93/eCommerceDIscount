@@ -19,8 +19,16 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.grocery.entities.VegetableDiscount;
 import com.example.grocery.services.VegetableDiscountService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/api/vegetable_discounts")
+@Tag(name = "Vegetable Discount Controller", description = "API for managing vegetable discounts")
 public class VegetableDiscountController {
     private final VegetableDiscountService vegetableDiscountService;
 
@@ -29,15 +37,27 @@ public class VegetableDiscountController {
         this.vegetableDiscountService = vegetableDiscountService;
     }
 
+    @Operation(summary = "Get all vegetable discounts")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found all vegetable discounts", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = VegetableDiscount.class)) }),
+            @ApiResponse(responseCode = "404", description = "Vegetable discounts not found", content = @Content)
+    })
     @GetMapping
     public ResponseEntity<?> getAllVegetableDiscount() {
         List<VegetableDiscount> discounts = vegetableDiscountService.findAll();
         if (!discounts.isEmpty()) {
             return ResponseEntity.ok(discounts);
         }
-        return ResponseEntity.ok("Currently there are no discounts for vegetables");
+        return new ResponseEntity<>("No vegetable discounts available", HttpStatus.NOT_FOUND);
     }
 
+    @Operation(summary = "Get vegetable discount by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found the vegetable discount", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = VegetableDiscount.class)) }),
+            @ApiResponse(responseCode = "404", description = "Vegetable discount not found", content = @Content)
+    })
     @GetMapping("/{id}")
     public ResponseEntity<VegetableDiscount> getVegetableDiscountById(@PathVariable("id") Long id) {
         Optional<VegetableDiscount> vegetableDiscount = vegetableDiscountService.findById(id);
@@ -46,6 +66,12 @@ public class VegetableDiscountController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @Operation(summary = "Create a new vegetable discount")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Vegetable discount created", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = VegetableDiscount.class)) }),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
+    })
     @PostMapping
     public ResponseEntity<?> createVegetableDiscount(@RequestBody VegetableDiscount vegetableDiscount) {
         try {
@@ -57,6 +83,12 @@ public class VegetableDiscountController {
         }
     }
 
+    @Operation(summary = "Update a vegetable discount by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Vegetable discount updated", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = VegetableDiscount.class)) }),
+            @ApiResponse(responseCode = "404", description = "Vegetable discount not found", content = @Content)
+    })
     @PutMapping("/{id}")
     public ResponseEntity<VegetableDiscount> updateVegetableDiscount(@PathVariable("id") Long id,
             @RequestBody VegetableDiscount vegetableDiscount) {
@@ -72,6 +104,12 @@ public class VegetableDiscountController {
         return ResponseEntity.notFound().build();
     }
 
+    @Operation(summary = "Partially update a vegetable discount by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Vegetable discount partially updated", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = VegetableDiscount.class)) }),
+            @ApiResponse(responseCode = "404", description = "Vegetable discount not found", content = @Content)
+    })
     @PatchMapping("/{id}")
     public ResponseEntity<VegetableDiscount> partialUpdateVegetableDiscount(@PathVariable("id") Long id,
             @RequestBody VegetableDiscount vegetableDiscount) {
@@ -96,6 +134,11 @@ public class VegetableDiscountController {
         return ResponseEntity.notFound().build();
     }
 
+    @Operation(summary = "Delete a vegetable discount by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Vegetable discount deleted", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Vegetable discount not found", content = @Content)
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteDiscount(@PathVariable("id") Long id) {
         Optional<VegetableDiscount> vdOptional = vegetableDiscountService.findById(id);

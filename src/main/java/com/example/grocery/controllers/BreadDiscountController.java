@@ -17,10 +17,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.grocery.services.BreadDiscountService;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import com.example.grocery.entities.BreadDiscount;
 
 @RestController
 @RequestMapping("/api/bread_discounts")
+@Tag(name = "Bread Discount Controller", description = "API for managing discounts on bread")
 public class BreadDiscountController {
 
     private final BreadDiscountService breadDiscountService;
@@ -30,6 +39,12 @@ public class BreadDiscountController {
         this.breadDiscountService = breadDiscountService;
     }
 
+    @Operation(summary = "Get all bread discounts")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found all bread discounts", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = BreadDiscount.class)) }),
+            @ApiResponse(responseCode = "404", description = "Discounts not found", content = @Content)
+    })
     @GetMapping
     public ResponseEntity<?> getAllBreadDiscounts() {
         List<BreadDiscount> discounts = breadDiscountService.findAll();
@@ -39,6 +54,12 @@ public class BreadDiscountController {
         return ResponseEntity.ok("No discounts available for bread at the moment");
     }
 
+    @Operation(summary = "Get bread discount by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found the bread discount", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = BreadDiscount.class)) }),
+            @ApiResponse(responseCode = "404", description = "Bread discount not found", content = @Content)
+    })
     @GetMapping("/{id}")
     public ResponseEntity<BreadDiscount> getBreadDiscountById(@PathVariable("id") Long id) {
         Optional<BreadDiscount> bdOptional = breadDiscountService.findById(id);
@@ -47,6 +68,12 @@ public class BreadDiscountController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @Operation(summary = "Create a new bread discount")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Bread discount created", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = BreadDiscount.class)) }),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
+    })
     @PostMapping
     public ResponseEntity<?> createBreadDiscount(@RequestBody BreadDiscount breadDiscount) {
         try {
@@ -58,6 +85,12 @@ public class BreadDiscountController {
         }
     }
 
+    @Operation(summary = "Update a bread discount by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Bread discount updated", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = BreadDiscount.class)) }),
+            @ApiResponse(responseCode = "404", description = "Bread not found", content = @Content)
+    })
     @PutMapping("/{id}")
     public ResponseEntity<BreadDiscount> updateBreadDiscount(@PathVariable("id") Long id,
             @RequestBody BreadDiscount breadDiscount) {
@@ -73,6 +106,12 @@ public class BreadDiscountController {
         return ResponseEntity.notFound().build();
     }
 
+    @Operation(summary = "Partially update a bread discount by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Bread discount partially updated", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = BreadDiscount.class)) }),
+            @ApiResponse(responseCode = "404", description = "Bread discount not found", content = @Content)
+    })
     @PatchMapping("/{id}")
     public ResponseEntity<BreadDiscount> partialUpdateBreadDiscount(@PathVariable("id") Long id,
             @RequestBody BreadDiscount breadDiscount) {
@@ -97,6 +136,11 @@ public class BreadDiscountController {
         return ResponseEntity.notFound().build();
     }
 
+    @Operation(summary = "Delete a bread discount by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Bread discount deleted", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Brad discount not found", content = @Content)
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteDiscount(@PathVariable("id") Long id) {
         Optional<BreadDiscount> bdOptional = breadDiscountService.findById(id);
